@@ -1,0 +1,33 @@
+{% include 'layout.html' %}
+
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Criar categoria</h3>
+      <form action="{% url 'create_category' %}" method="POST">{% csrf_token %}
+        <div class="form-group">
+          <label for="name">Nome:</label>
+          <input type="text" class="form-control" name="name" id="name" required>
+        </div>
+        <div class="form-group">
+          <label for="description">Descrição:</label>
+          <input type="text" class="form-control" name="description" id="description">
+        </div>
+        <div class="form-group">
+          <label for="category_type">Tipo:</label>
+          <select class="form-control" name="category_type" id="category_type">
+            {% for type in category_type %}
+              <option value="{{type.0}}">{{type.1}}</option>
+            {% endfor %}              
+          </select>
+        </div>
+        <button class="btn btn-primary" type="submit">Criar</button>
+      </form>
+    </div>
+  </div>
+</div>
+  
+{% endblock %}
+  
