@@ -1,0 +1,48 @@
+{% include 'layout.html' %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Relatório de contas a pagar</h3>        
+      <h5>Escolha o período final para gerar o relatório</h5>
+      <form action="{% url 'pay_bills_report' %}" method="POST">{% csrf_token %}
+        <div class="form-group">
+          <input class="form-control" type="date" name="due_date" id="due_date" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Gerar</button>
+      </form>
+    </div>
+  </div>            
+  
+  {% if pay_bills != None %}
+    <table class="table mt-3">
+      <caption>Tabela de contas a pagar</caption>
+      <thead>
+        <tr>
+          <th>Data vencimento</th>
+          <th>Data pagamento</th>
+          <th>Valor</th>
+          <th>Descrição</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for pay in pay_bills %}
+        <tr>
+          <td>{{pay.due_date | date:"d/m/Y"}}</td>
+          <td>{{pay.pay_date | date:"d/m/Y"}}</td>
+          <td>R$ {{pay.value | floatformat:2}}</td>
+          <td>{{pay.description}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+
+    </table>
+    
+  {% endif %}
+    
+</div>
+  
+{% endblock %}
+  
