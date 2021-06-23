@@ -1,0 +1,46 @@
+{% include 'layout.html' %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Relatório de contas a receber</h3>        
+      <h5>Escolha o período final para gerar o relatório</h5>
+      <form action="{% url 'receive_bills_report' %}" method="POST">{% csrf_token %}
+        <div class="form-group">
+          <input class="form-control" type="date" name="receive_date" id="receive_date" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Gerar</button>
+      </form>
+    </div>
+  </div>            
+  
+  {% if receive_bills != None %}
+    <table class="table mt-3">
+      <caption>Tabela de contas a receber</caption>
+      <thead>
+        <tr>
+          <th>Data recebimento</th>
+          <th>Valor</th>
+          <th>Descrição</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for receive in receive_bills %}
+        <tr>
+          <td>{{receive.receive_date | date:"d/m/Y"}}</td>
+          <td>R$ {{receive.value | floatformat:2}}</td>
+          <td>{{receive.description}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+
+    </table>
+    
+  {% endif %}
+    
+</div>
+  
+{% endblock %}
+  
