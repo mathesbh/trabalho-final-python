@@ -1,0 +1,62 @@
+{% include 'layout.html' %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Fluxo de caixa</h3>
+      <h4>Período <small class="text-muted">{{start_date}} à {{end_date}}</small></h4>
+      <p>Saldo inicial: R${{initial_balance | floatformat:2}}</p>
+      <table class="table">
+        <thead>
+          <tr class="bg-success">
+            <th>Receitas</th>
+            <th colspan="2">Total: R${{total_receive_bills | floatformat:2}}</th>
+          </tr>
+          <tr>
+            <th>Data</th>
+            <th>Categorias</th>
+            <th>Valor</th>
+          </tr>          
+        </thead>
+        <tbody>
+          {% for item_receive in receive_bills %}
+            <tr>
+              <td>{{item_receive.receive_date | date:"d-m-Y"}}</td>
+              <td>{{item_receive.category.name}}</td>
+              <td>R${{item_receive.value | floatformat:2}}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+        <thead>
+          <tr class="bg-danger">
+            <th>Despesas</th>
+            <th colspan="2">Total: R${{total_pay_bills | floatformat:2}}</th>
+          </tr>
+          <tr>
+            <th>Data</th>
+            <th>Categorias</th>
+            <th>Valor</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item_pay in pay_bills %}
+            <tr>
+              <td>{{item_pay.due_date | date:"d-m-Y"}}</td>
+              <td>{{item_pay.category.name}}</td>
+              <td>R${{item_pay.value | floatformat:2}}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            {% if total < 0 %}
+              <th class="bg-danger" colspan="3">Saldo final do período: R${{total | floatformat:2}}</th>
+            {% else %}
+              <th class="bg-success" colspan="3">Saldo final do período: R${{total | floatformat:2}}</th>
+            {% endif %}
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>

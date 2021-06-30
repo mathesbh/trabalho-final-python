@@ -1,0 +1,25 @@
+{% include 'layout.html' %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Fluxo de caixa</h3>
+      <h5>Preencha os campos para gerar o fluxo de caixa</h5>
+      <form action="{% url 'cash_flow' %}" method="POST">{% csrf_token %}
+        <div class="form-group">
+          <label for="initial_balance">Saldo inicial</label>
+          <input class="form-control" type="number" name="initial_balance" id="initial_balance" step="0.01" required>
+        </div>
+        <div class="form-group">
+          <label for="start_date">Insira data inicial</label>
+          <input class="form-control" type="date" name="start_date" id="start_date" required>
+        </div>
+        <div class="form-group">
+          <label for="end_date">Insira data final</label>
+          <input class="form-control" type="date" name="end_date" id="end_date" required>
+        </div>
+        <button class="btn btn-primary" type="submit">Gerar</button>
+      </form>
+    </div>
+  </div>
+</div>
