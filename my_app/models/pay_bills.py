@@ -11,4 +11,4 @@ class PayBills(models.Model):
   payment = models.CharField(max_length=10, choices=PAYMENT_CHOICE, default='D')
   due_date = models.DateField(null=True, blank=True)
   pay_date = models.DateField(null=True, blank=True)
-  categories = models.ManyToManyField(Category)
+  category = models.ForeignKey(Category, on_delete=models.CASCADE)

@@ -7,4 +7,4 @@ class ReceiveBills(models.Model):
   description = models.CharField(max_length=200, null=True, blank=True)
   status = models.CharField(max_length=10, choices=STATUS_CHOICE, default='N')
   receive_date = models.DateField()
-  categories = models.ManyToManyField(Category)
+  category = models.ForeignKey(Category, on_delete=models.CASCADE)
