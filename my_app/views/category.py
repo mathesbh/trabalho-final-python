@@ -19,6 +19,8 @@ def create_category(request: HttpRequest):
 
     category.save()
 
-    return HttpResponse('Categoria criada com sucesso!')
+    categories = Category.objects.all()
+
+    return render(request, 'category/list.html', { 'categories': categories })
 
 
