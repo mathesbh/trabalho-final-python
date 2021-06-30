@@ -1,8 +1,9 @@
 from django.http.response import HttpResponse
+from my_app.models import category
 from my_app.models.category import Category
 from my_app.models.pay_bills import PAYMENT_CHOICE, PayBills, STATUS_CHOICE
 from django.http.request import HttpRequest
-from django.shortcuts import render
+from django.shortcuts import redirect, render, resolve_url
 
 def create_pay_bills(request: HttpRequest):
   categories = Category.objects.filter(category_type='D')
@@ -26,12 +27,6 @@ def create_pay_bills(request: HttpRequest):
 
     category = Category.objects.get(id=_category_id)
 
-    pay_bills = PayBills(value=_value, description=_description, due_date=_due_date, pay_date=_pay_date, payment=_payment, status=_status)
+    PayBills.objects.create(value=_value, description=_description, due_date=_due_date, pay_date=_pay_date, payment=_payment, status=_status, category=category)
 
-    pay_bills.save()
-
-    pay_bills.categories.add(category)
-
-    pay_bills.save()
-
-    return HttpResponse('Conta a pagar cadastrada com sucesso!')
+    return redirect(resolve_url('home'))

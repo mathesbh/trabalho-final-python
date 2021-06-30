@@ -22,10 +22,6 @@ def create_receive_bills(request: HttpRequest):
 
     category = Category.objects.get(id=_category_id)
 
-    receive_bills = ReceiveBills(value=_value, description=_description, receive_date=_receive_date, status=_status)
-
-    receive_bills.save()
-
-    receive_bills.categories.add(category)
+    ReceiveBills.objects.create(value=_value, description=_description, receive_date=_receive_date, status=_status, category=category)
 
     return redirect(resolve_url('home'))
